@@ -156,12 +156,13 @@
 <script src="{{url_for('static', filename='js/main.js')}}"></script>
 <script src="{{url_for('static', filename='js/vendor/jquery.slides.min.js')}}"></script>
 <script>
-$(function(){
-  $("#slides").slidesjs({
-    width: 440,
-    height: 328
-});
-});
+ $(function() {
+      $('#slides').slidesjs({
+        width: 940,
+        height: 328,
+        navigation: false
+      });
+    });
 </script>
 
 <!--        <script>
