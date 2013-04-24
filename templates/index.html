@@ -156,7 +156,6 @@
 <script src="{{url_for('static', filename='js/main.js')}}"></script>
 <script src="{{url_for('static', filename='js/vendor/jquery.slides.min.js')}}"></script>
 <script>
-var loginFlag = true;
  $(function() {
       $('#slides').slidesjs({
         width: 940,
@@ -166,11 +165,7 @@ var loginFlag = true;
     });
 
  function checkLogin(){
-      if(loginFlag == false) {
-        window.location.href = "/login/";
-      } else if(loginFlag== true) {
           window.location.href = "/createNewEvent/";
-      }
  }
 </script>
 

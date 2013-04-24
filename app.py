@@ -12,6 +12,8 @@ import MySQLdb
 
 app = Flask(__name__)  # Creates a Flask application object
 db = MySQLdb.connect("localhost","root","kde","EventMDB" )
+cursor = db.cursor()
+authenticated = False
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -28,11 +30,30 @@ def login():
 
 @app.route("/authentication/", methods=['GET', 'POST'])
 def authentication():
-    return ('<h2>Hello</h2>')
+    cursor = db.cursor()
+    name = urllib2.unquote(request.form['username'])
+    passwd = urllib2.unquote(request.form['passwd'])
+    query = "select * from User where u_name='"+name+"' and password='"+passwd+"'"
+    cursor.execute(query);
+    print "row size is --------->>>"
+    print cursor.rowcount
+    if cursor.rowcount == 1 :
+        row = cursor.fetchone()
+        print "success"
+        global authenticated
+        authenticated = True
+        return createNewEvent()
+    else:
+        print "Authentication failed"
+        return(" Wrong username of password")
 
 @app.route("/createNewEvent/", methods=['GET', 'POST'])
 def createNewEvent():
-    return render_template('create_event.html')
+    if authenticated == True:
+        return render_template('create_event.html')
+    else:
+        return login()
+
 
 
 if __name__ == "__main__":
