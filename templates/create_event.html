@@ -15,14 +15,14 @@
   body {
     padding-top: 60px;
     padding-bottom: 40px;
-  }
+}
 
-  .container {
+.container {
     width: 300px;
-  }
+}
 
-  /* The white background content wrapper */
-  .container > .content {
+/* The white background content wrapper */
+.container > .content {
     background-color: #fff;
     padding: 20px;
     margin: 0 -20px;
@@ -32,23 +32,23 @@
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
     box-shadow: 0 1px 2px rgba(0,0,0,.15);
-  }
+}
 
-  .login-form {
+.login-form {
     margin-left: 65px;
-  }
+}
 
-  legend {
+legend {
     margin-right: -50px;
     font-weight: bold;
     color: #404040;
-  }
+}
 
-  </style>
-  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-responsive.min.css')}}">
-  <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+</style>
+<link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-responsive.min.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
 
-  <script src="{{url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js')}}"></script>
+<script src="{{url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js')}}"></script>
 </head>
 <body>
         <!--[if lt IE 7]>
@@ -56,7 +56,6 @@
             <![endif]-->
 
             <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
-
             <div class="navbar navbar-inverse navbar-fixed-top">
               <div class="navbar-inner">
                 <div class="container">
@@ -64,37 +63,55 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                  </a>
-                  <a class="brand" href="/">Svarupa</a>
-                  <div class="nav-collapse collapse">
+                </a>
+                <a class="brand" href="/">Svarupa</a>
+                <div class="nav-collapse collapse">
                     <ul class="nav">
                       <li><a href="/">Home</a></li>
                       <li><a href="/about/">About</a></li>
-                    </ul>
-                  </div><!--/.nav-collapse -->
-                </div>
-              </div>
-            </div>
-            <body>
-              <div class="container">
-                <div class="content">
-                  <div class="row">
-                    <div class="login-form">
-                      <h2>Login</h2>
-                      <form method="POST" action="/authentication/">
-                        <fieldset>
-                          <div class="clearfix">
-                            <input type="text" placeholder="Username">
-                          </div>
-                          <div class="clearfix">
-                            <input type="password" placeholder="Password">
-                          </div>
-                          <button class="btn btn-primary" type="submit">Sign in</button>
-                        </fieldset>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div> <!-- /container -->
-            </body>
-            </html>
+                  </ul>
+              </div><!--/.nav-collapse -->
+          </div>
+      </div>
+  </div>
+  <body>
+      <div class="container">
+        <div class="content">
+          <div class="row">
+            <div class="login-form">
+              <h2>Create an event</h2>
+              Organising life in an easier way
+              <br/><br/><br/><br/>
+              <form method="POST" action="/submitNewEvent/">
+                <fieldset>
+                  <div class="clearfix">
+                    <label>Event Name: </label><input type="text" >
+                </div><br/>
+
+                <div class="clearfix">
+                   <label> Date : </label><input type="date">
+                </div><br/>
+                <div class="clearfix">
+                    <label>Category : </label><select>
+                        <option value="tech">Technical</option>
+                      <option value="sports">Sports</option>
+                      <option value="ewd">EWD</option>
+                      <option value="cultural">Cultural</option>
+                      <option value="music">Music</option>
+                  </select>
+              </div><br/>
+              <div class="clearfix">
+                    <label>Email ID :</label> <input type="email">
+                </div><br/>
+              <div class="clearfix">
+                <label>Select banner: </label> <input type="file" name="img">
+            </div><br/>
+            <button class="btn btn-primary" type="submit">Create</button>
+        </fieldset>
+    </form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

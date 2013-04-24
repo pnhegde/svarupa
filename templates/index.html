@@ -19,9 +19,6 @@
     #slides {
       display:none;
   }
-  #slides {
-      display: none
-  }
 
   #slides .slidesjs-navigation {
       margin-top:3px;
@@ -77,6 +74,9 @@
   #slides a:active {
       color: #9e2020
   }
+  .navbar {
+      overflow: hidden
+    }
   </style>
   <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-responsive.min.css')}}">
   <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
@@ -122,17 +122,17 @@
               <a href="#" class="slidesjs-previous slidesjs-navigation"><i class="icon-chevron-left icon-large"></i></a>
               <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right icon-large"></i></a>
           </div>
-          <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+          <p><button class="btn btn-primary btn-large" id='createEventButtonId' onclick='checkLogin()'>Create an event &raquo;</button></p>
       </div>
 
       <!-- Example row of columns -->
       <div class="row">
-        <div class="span5">
+        <div class="span4">
             <h2>Upcoming events</h2>
             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
             <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
-        <div class="span5 pull-right">
+        <div class="span6 pull-left">
             <h2>Heading</h2>
             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
             <p><a class="btn" href="#">View details &raquo;</a></p>
@@ -156,6 +156,7 @@
 <script src="{{url_for('static', filename='js/main.js')}}"></script>
 <script src="{{url_for('static', filename='js/vendor/jquery.slides.min.js')}}"></script>
 <script>
+var loginFlag = true;
  $(function() {
       $('#slides').slidesjs({
         width: 940,
@@ -163,6 +164,14 @@
         navigation: false
       });
     });
+
+ function checkLogin(){
+      if(loginFlag == false) {
+        window.location.href = "/login/";
+      } else if(loginFlag== true) {
+          window.location.href = "/createNewEvent/";
+      }
+ }
 </script>
 
 <!--        <script>
