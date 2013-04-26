@@ -50,7 +50,7 @@
       width: 13px;
       height: 0;
       padding-top: 13px;
-      background-image: url(img/pagination.png);
+      background-image: url(static/img/pagination.png);
       background-position: 0 0;
       float: left;
       overflow: hidden;
@@ -100,8 +100,11 @@
                         <li class="active"><a href="#">Home</a></li>
                         <li><a href="/about/">About</a></li>
                     </ul>
-                    <form class="navbar-form pull-right" action="login/">
-                        <button type="submit" class="btn">Sign in</button>
+                    <form class="navbar-form pull-right" action="/login/">
+                        <button type="submit" id="signinButton" class="btn">Sign in</button>
+                    </form>
+                    <form class="navbar-form pull-right" action="/logout/" >
+                        <button type="submit" class="btn" id="logoutButton" >Logout</button>
                     </form>
                 </div><!--/.nav-collapse -->
             </div>
@@ -143,7 +146,7 @@
     <hr>
 
     <footer>
-        <p>&copy; Anusha Rao 2013</p>
+        <p>&copy;<a href='http://pnhegde.in'> <strong>Phaneendra Hegde</strong> </a> </p>
     </footer>
 
 </div> <!-- /container -->
