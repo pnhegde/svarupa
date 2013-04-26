@@ -59,26 +59,44 @@ def login():
 @app.route('/login/authorized')
 @facebook.authorized_handler
 def facebook_authorized(resp):
-    if resp is None:
-        return 'Access denied: reason=%s error=%s' % (
-            request.args['error_reason'],
-            request.args['error_description']
-        )
-    session['oauth_token'] = (resp['access_token'], '')
+    next_url = request.args.get('next') or url_for('index')
+    if resp is None or 'access_token' not in resp:
+        return redirect(next_url)
+
+    session['logged_in'] = True
+    session['facebook_token'] = (resp['access_token'], '')
     me = facebook.get('/me')
-    return 'Logged in as id=%s name=%s redirect=%s' % \
-        (me.data['id'], me.data['name'], request.args.get('next'))
+    user =  me.data['name']
+    return redirect(next_url)
+    # if resp is None:
+    #     authenticated = False
+    #     return 'Access denied: reason=%s error=%s' % (
+    #         request.args['error_reason'],
+    #         request.args['error_description']
+    #     )
+    # authenticated = True
+    # print "Oauth token -------->>>>>>"
+    # print session.get('oauth_token')
+    # return render_template('create_event.html')
+    # session['oauth_token'] = (resp['access_token'], '')
+    # me = facebook.get('/me')
+    # return 'Logged in as id=%s name=%s redirect=%s' % \
+    #     (me.data['id'], me.data['name'], request.args.get('next'))
 
 @facebook.tokengetter
-def get_facebook_oauth_token():
-    return session.get('oauth_token')
+def get_facebook_token():
+    return session.get('facebook_token')
 
 
 @app.route("/logout/", methods=['GET', 'POST'])
 def logout():
-    global authenticated
-    authenticated = False
-    return index()
+    pop_login_session()
+    return redirect(url_for('index'))
+
+def pop_login_session():
+    session.pop('logged_in', None)
+    session.pop('facebook_token', None)
+
 
 @app.route("/authentication/", methods=['GET', 'POST'])
 def authentication():
