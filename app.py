@@ -112,7 +112,6 @@ def pop_login_session():
 
 @app.route("/submitNewEvent", methods=['GET','POST'])
 def  submitNewEvent():
-    print get_facebook_token()
     ename = urllib2.unquote(request.form['name']) if urllib2.unquote(request.form['name']) else "Anonymous event"
     cat = urllib2.unquote(request.form['category']) if urllib2.unquote(request.form['category']) else 'unknown'
     date = urllib2.unquote(request.form['date']) if urllib2.unquote(request.form['date']) else None
@@ -124,7 +123,8 @@ def  submitNewEvent():
     q = "INSERT INTO CreateEvent(e_name,e_loc,e_id,e_date,e_time,e_category,u_id,e_desc) VALUES ('"+ename+"','"+loc+"','"+str(counter)+"','"+date+"','"+time+"','"+cat+"','"+current_user+"','"+desc+"');"
     print q
     db.query(q);
-    return redirect(url_for('index'))
+    # return redirect(url_for('index'))
+    return ("<script> var r=confirm(\"Event created succefully. Wanna create one more event? \"); if (r==true) {   window.location.href = \"/createEvent/\";   } else  {  window.location.href = \"/\"; }  </script> ")
 
 @app.route("/events/", methods=['GET','POST'])
 def events():
