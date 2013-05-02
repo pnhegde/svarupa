@@ -118,15 +118,15 @@
 
     <!-- Main hero unit for a primary marketing message or call to action -->
     <div class="hero-unit" >
-      <h2>Event is happening out there; some catchy line goes here.</h2>
-      <p>Event xyz is happening at PESIT, Bangalore. </p>
+      <h2 id="eventHeader">Event is happening out there; some catchy line goes here.</h2>
+      <p id="eventDesc">Event xyz is happening at PESIT, Bangalore. </p>
       <div id="slides">
-        <img src="static/img/example-slide-1.jpg" alt="Photo by: Missy S Link: http://www.flickr.com/photos/listenmissy/5087404401/">
-        <img src="static/img/example-slide-2.jpg" alt="Photo by: Daniel Parks Link: http://www.flickr.com/photos/parksdh/5227623068/">
-        <img src="static/img/example-slide-3.jpg" alt="Photo by: Mike Ranweiler Link: http://www.flickr.com/photos/27874907@N04/4833059991/">
-        <img src="static/img/example-slide-4.jpg" alt="Photo by: Stuart SeegerLink: http://www.flickr.com/photos/stuseeger/97577796/">
-        <a href="#" class="slidesjs-previous slidesjs-navigation"><i class="icon-chevron-left icon-large"></i></a>
-        <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right icon-large"></i></a>
+        <img src="static/img/hackathon.png" alt="Photo missing">
+        <img src="static/img/devfest.jpg" alt="Photo missing">
+        <img src="static/img/marathon.jpg" alt="Photo missing">
+        <img src="static/img/music.jpg" alt="Photo missing">
+        <a href="#" class="slidesjs-previous slidesjs-navigation" onclick="changeHeader()"><i class="icon-chevron-left icon-large"></i></a>
+        <a href="#" class="slidesjs-next slidesjs-navigation" onclick="changeHeader()"><i class="icon-chevron-right icon-large"></i></a>
       </div>
       <p><button class="btn btn-primary btn-large" id='createEventButtonId' onclick='checkLogin()'>Create an event &raquo;</button></p>
     </div>
@@ -177,6 +177,18 @@
     window.location.href = "/createEvent/";
     {% endif %}
   }
+
+  function changeHeader() {
+    var randevent = ['Event One', 'Event Two', 'Event Three', 'Event Four', 'Event Five', 'Event Six', 'Event Seven', 'Event Eight'];
+    var randdesc = ['Event One - Description One', 'Event Two - Description Two', 'Event Three - Description Three', 'Event Four- Description Four',
+    'Event Five - Description Five', 'Event Six - Description Six', 'Event Seven - Description Seven', 'Event Eight-Description Eight'];
+    var randomIndex = Math.floor(Math.random() * randevent.length);
+    var randomString = randevent[randomIndex];
+    var randdescription = randdesc[randomIndex];
+    $("#eventHeader").text(randomString);
+    $("#eventDesc").text(randdescription);
+
+  }
   </script>
-    </body>
-    </html>
+</body>
+</html>
