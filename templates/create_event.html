@@ -38,6 +38,10 @@
     margin-left: 65px;
   }
 
+  td {
+    padding:15px;
+  }
+
   legend {
     margin-right: -50px;
     font-weight: bold;
@@ -95,51 +99,49 @@
                         <table>
                           <tr>
                             <td>
-                        <fieldset>
-                          <div class="clearfix">
-                            <label>Event Name: </label><input type="text"  name='name'>
-                          </div><br/>
+                              <fieldset>
+                                <div class="clearfix">
+                                  <label>Event Name: </label><input type="text"  name='name'>
+                                </div><br/>
 
-                          <div class="clearfix">
-                           <label> Date : </label><input type="date" name='date'>
-                         </div><br/>
+                                <div class="clearfix">
+                                 <label> Date : </label><input type="date" name='date'>
+                               </div><br/>
 
-                        <div class="clearfix">
-                          <label>Time: </label><input type="time" name="time">
-                          </div><br/>
+                               <div class="clearfix">
+                                <label>Time: </label><input type="time" name="time">
+                              </div><br/>
+                              <div class="clearfix">
+                                <label>Category : </label><select name='category'>
+                                <option value="tech">Technical</option>
+                                <option value="sports">Sports</option>
+                                <option value="ewd">EWD</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="music">Music</option>
+                              </select>
+                            </div><br/>
+                          </td>
 
-                         <div class="clearfix">
-                          <label>Category : </label><select name='category'>
-                          <option value="tech">Technical</option>
-                          <option value="sports">Sports</option>
-                          <option value="ewd">EWD</option>
-                          <option value="cultural">Cultural</option>
-                          <option value="music">Music</option>
-                        </select>
-                      </div><br/>
-
-                    </td>
-                    <td>
-
-                      <div class="clearfix">
-                        <label>Location :</label> <input type="text" name='loc'>
-                      </div><br/>
-                      <div class="clearfix">
-                        <label>Description :</label> <textarea rows="5" cols="50" name='desc'> </textarea>
-                      </div><br/>
+                          <td>
+                            <div class="clearfix">
+                              <label>Location :</label> <input type="text" name='loc'>
+                            </div><br/>
+                            <div class="clearfix">
+                              <label>Description :</label> <textarea rows="9" cols="50" name='desc'> </textarea>
+                            </div><br/>
 <!--
                       <div class="clearfix">
                         <label>Select banner: </label> <input type="file" name="img">
                       </div><br/> -->
                     </td>
-                    </tr>
-                      </table>
-                      <button class="btn btn-primary" type="submit">Create</button>
-                    </fieldset>
-                  </form>
-                </div>
-              </div>
-            </div>
+                  </tr>
+                </table>
+                <button class="btn btn-primary" type="submit">Create</button>
+              </fieldset>
+            </form>
           </div>
-        </body>
-        </html>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>

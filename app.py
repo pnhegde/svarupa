@@ -4,6 +4,7 @@ import json
 import datetime
 import urllib2
 import os
+import random
 
 from flask import Flask
 from flask import request
@@ -19,7 +20,7 @@ DEBUG = True
 FACEBOOK_APP_ID = '292895004174602'
 FACEBOOK_APP_SECRET = 'a3eb0e9b167d5524d1c84fe68bdc2271'
 
-
+counter = 0
 app = Flask(__name__)  # Creates a Flask application object
 app.debug = DEBUG
 app.secret_key = SECRET_KEY
@@ -76,6 +77,7 @@ def facebook_authorized(resp):
     print '---------------------------------------------------------'
     global current_user
     uid = me.data['id']
+    session['uid'] = uid
     current_user = uid
     name =  me.data['name'] if me.data.get('name') else "Noname"
     bio = me.data['bio'] if me.data.get('bio') else "No bio"
@@ -95,6 +97,7 @@ def facebook_authorized(resp):
 
 @facebook.tokengetter
 def get_facebook_token():
+    print session.get('uid')
     return session.get('facebook_token')
 
 
@@ -109,48 +112,79 @@ def pop_login_session():
 
 @app.route("/submitNewEvent", methods=['GET','POST'])
 def  submitNewEvent():
+    print get_facebook_token()
     ename = urllib2.unquote(request.form['name']) if urllib2.unquote(request.form['name']) else "Anonymous event"
     cat = urllib2.unquote(request.form['category']) if urllib2.unquote(request.form['category']) else 'unknown'
     date = urllib2.unquote(request.form['date']) if urllib2.unquote(request.form['date']) else None
     time = urllib2.unquote(request.form['time']) if urllib2.unquote(request.form['time']) else None
     loc = urllib2.unquote(request.form['loc']) if urllib2.unquote(request.form['loc']) else "unknown"
     desc = urllib2.unquote(request.form['desc']) if urllib2.unquote(request.form['desc']) else None
-    q = "INSERT INTO CreateEvent(e_name,e_loc,e_date,e_time,e_category,u_id,e_desc) VALUES ('"+ename+"','"+loc+"','"+date+"','"+time+"','"+cat+"','"+current_user+"','desc');"
+    global counter
+    counter= counter+random.randrange(1030,5004500)
+    q = "INSERT INTO CreateEvent(e_name,e_loc,e_id,e_date,e_time,e_category,u_id,e_desc) VALUES ('"+ename+"','"+loc+"','"+str(counter)+"','"+date+"','"+time+"','"+cat+"','"+current_user+"','"+desc+"');"
     print q
     db.query(q);
     return redirect(url_for('index'))
 
-@app.route("/events", methods=['GET','POST'])
+@app.route("/events/", methods=['GET','POST'])
 def events():
-    cat = urllib2.unquote(request.form['category']) if urllib2.unquote(request.form['category']) else 'all'
-    if  cat == "all" :
-        q = 'SELECT * FROM CreateEvent'
-        db.query(q)
-        result = db.store_result()
-        if result.num_rows() :
-            print result.
+    return render_template('events.html')
 
+@app.route("/category/", methods=['GET','POST'])
+def category():
+    return render_template('category.html')
 
+@app.route("/allEvents/", methods=['GET','POST'])
+def allEvents():
+    q = 'SELECT * FROM CreateEvent;'
+    db.query(q)
+    result = db.store_result()
+    count = result.num_rows()
+    response= {}
+    response['success'] = "true"
+    response["event"] = []
+    response['num'] = count
+    while count > 0 :
+        t = result.fetch_row()[0]
+        temp = {}
+        temp['name'] = t[0]
+        temp['location'] = t[1]
+        temp['id'] = t[2]
+        temp['date'] = t[3]
+        temp['time'] = t[4]
+        temp['category'] = t[5]
+        temp['desc'] = t[7]
+        response['event'].append(temp)
+        count-=1
+    print response
+    return json.dumps(response)
 
-# @app.route("/authentication/", methods=['GET', 'POST'])
-# def authentication():
-#     cursor = db.cursor()
-#     name = urllib2.unquote(request.form['username'])
-#     passwd = urllib2.unquote(request.form['passwd'])
-#     query = "select * from User where u_name='"+name+"' and password='"+passwd+"'"
-#     cursor.execute(query);
-#     print "row size is --------->>>"
-#     print cursor.rowcount
-#     if cursor.rowcount == 1 :
-#         row = cursor.fetchone()
-#         print "success"
-#         global authenticated
-#         authenticated = True
-#         return createNewEvent()
-#     else:
-#         print "Authentication failed"
-#         return(" Wrong username of password")
-
+@app.route("/getcategory/", methods=['GET','POST'])
+def getcategory():
+    cat = urllib2.unquote(request.args['category']) if urllib2.unquote(request.args['category']) else "unknown"
+    print cat
+    q = "SELECT * FROM CreateEvent WHERE e_category='"+cat+"';"
+    db.query(q)
+    result = db.store_result()
+    count = result.num_rows()
+    response= {}
+    response['success'] = "true"
+    response["event"] = []
+    response['num'] = count
+    while count > 0 :
+        t = result.fetch_row()[0]
+        temp = {}
+        temp['name'] = t[0]
+        temp['location'] = t[1]
+        temp['id'] = t[2]
+        temp['date'] = t[3]
+        temp['time'] = t[4]
+        temp['category'] = t[5]
+        temp['desc'] = t[7]
+        response['event'].append(temp)
+        count-=1
+    print response
+    return json.dumps(response)
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))

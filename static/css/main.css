@@ -1,3 +1,36 @@
+.event {
+    position: relative;
+    width: 220px;
+    min-height: 170px;
+    background-color: #FFFFA2;
+    float: left;
+    text-align: center;
+    margin: 10px;
+    list-style-type: none;
+
+    -webkit-box-shadow:  0px 0px 6px 2px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow:  0px 0px 6px 2px rgba(0, 0, 0, 0.3);
+    -o-box-shadow:  0px 0px 6px 2px rgba(0, 0, 0, 0.3);
+    box-shadow:  0px 0px 6px 2px rgba(0, 0, 0, 0.3);
+
+    -webkit-transition: all 500ms ease;
+    -moz-transition: all 500ms ease;
+    -ms-transition: all 500ms ease;
+    -o-transition: all 500ms ease;
+    transition: all 500ms ease;
+  }
+/*
+  .event h3{
+    text-align: center;
+  }*/
+  .event:hover {
+    -moz-transform: scale(1) translateX(2px) translateY(1px) skewX(0deg) skewY(0deg);
+    -webkit-transform: scale(1)  translateX(2px) translateY(1px) skewX(0deg) skewY(0deg);
+    -o-transform: scale(1) translateX(2px) translateY(1px) skewX(0deg) skewY(0deg);
+    -ms-transform: scale(1) translateX(2px) translateY(1px) skewX(0deg) skewY(0deg);
+    transform: scale(1) translateX(2px) translateY(1px) skewX(0deg) skewY(0deg);
+    background-color: #8AF4FF;
+  }
 /*.hero-unit {
     background-image:  url('http://ebmedia.eventbrite.com/s3-build/admin/marketing/v2/featuredevents/6173283457.jpg?1366753097584');
 }*/

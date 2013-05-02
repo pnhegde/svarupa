@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Svarupa</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+  <style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+
+  .container {
+    width: 300px;
+  }
+
+  /* The white background content wrapper */
+  .container > .content {
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 -20px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
+  .cat-list {
+    margin-top: 30px;
+    margin-left: 20px;
+  }
+
+
+
+  </style>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-responsive.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
+  <script src="{{url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js')}}"></script>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="/"><h2 style="font-family: 'Verdana'">svarupa</h2></a>
+        <div class="nav-collapse collapse" style="margin-top: 20px; float: right;">
+          <ul class="nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/events/">All Events</a></li>
+            <li class="active"><a href="/category/">Category</a></li>
+            <li><a  href="/about/">About</a></li>
+          </ul>
+          <ul class="nav pull-right">
+            {% if not session.logged_in %}
+            <li><a href="/login/" style="background-image:  url('../static/img/facebook_login.png'); background-repeat:no-repeat; margin-top: 10px;"> <span style="visibility:hidden; ">login/signup with facebook</span> </a></li>
+            {% else %}
+            <li><a href="/logout/">Logout</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class='row'>
+          <div class="cat-list">
+            <label> Select Category :
+              <select name='category' id="categorylist" onchange="catClicked()">
+                <option value="tech">Technical</option>
+                <option value="sports">Sports</option>
+                <option value="ewd">EWD</option>
+                <option value="cultural">Cultural</option>
+                <option value="music">Music</option>
+              </select>
+            </label>
+          </div>
+          <div class='eventlist' id="eventlist">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    var node = document.getElementById("eventlist");
+    function catClicked() {
+      while (node.hasChildNodes()) {
+        node.removeChild(node.lastChild);
+      }
+      $.get("/getcategory/",{"category": $("#categorylist").val()})
+      .success(function(data) {
+        data = JSON.parse(data);
+        if(data["success"] == "true") {
+          for(var i = 0; i < data["num"]; i++) {
+            var urlHtml = "<li class=\"event\" onclick=\"alert('"+data['event'][i]["desc"]+"')\" id=\"" + data['event'][i]["id"] + "\" new=\"false\" mod=\"false\"> \
+            <div  title=\"View mode details !\" > <h3>" +  data["event"][i]["name"] + "</h3></div> \
+            <div  > Venue - <strong>"+data["event"][i]["location"]+"</strong></div> \
+            <div  > Date - <strong>"+data["event"][i]["date"]+"</strong></div> \
+            <div  > Time - <strong>"+data["event"][i]["time"]+"</strong></div> \
+            <div  > Category - <strong>"+data["event"][i]["category"]+"</strong></div> \
+            </li>";
+            $(".eventlist").append(urlHtml);
+          }
+        }
+        else {
+            // Was not able to fetch url successfully
+            alert("error fetching the events");
+          }
+        })
+    }
+    </script>
+  </body>
+  </html>
