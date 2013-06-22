@@ -15,7 +15,7 @@ from flask import Flask, redirect, url_for, session, request
 from flask_oauth import OAuth
 
 
-SECRET_KEY = 'a3eb0e9b167d5524d1c84fe68bdc2271'
+SECRET_KEY = 'Your_app_secret_Key'
 DEBUG = True
 FACEBOOK_APP_ID = '292895004174602'
 FACEBOOK_APP_SECRET = 'a3eb0e9b167d5524d1c84fe68bdc2271'
